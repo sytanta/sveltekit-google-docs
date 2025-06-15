@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 
-import clerkBackendClient from '$lib/clerk/backend';
+import clerkBackendClient from '$lib/utils/clerk/backend';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ request }) => {
