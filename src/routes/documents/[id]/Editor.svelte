@@ -168,13 +168,13 @@
 				}
 			});
 
-			// If user loads an existing document, allow usage after liveblocks room's storage loads
-			if (documentId === 'new') onLoaded?.();
-			else {
+			// If user is authenticated, allow editor usage after liveblocks room's storage finishes loading
+			if (documentId !== 'new') {
 				const unsubscribe = room.subscribe('storage-status', function (e) {
 					if (e === 'synchronized') {
 						onLoaded?.();
 						unsubscribe();
+						editor?.view?.focus();
 					}
 				});
 			}
@@ -236,7 +236,6 @@
 
 						const cursor = document.createElement('span');
 						cursor.classList.add('collaboration-cursor__caret');
-						// cursor.setAttribute('style', `border-color: ${displayColor}`);
 
 						const label = document.createElement('div');
 						label.classList.add('collaboration-cursor__label');
@@ -286,9 +285,15 @@
 						'focus:outline-none print:border-0 bg-white border border-[#c7c7c7] flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-14 cursor-text'
 				}
 			},
-			autofocus: true,
 			onCreate({ editor }) {
 				editorStore.set(editor);
+
+				if (documentId === 'new') {
+					editor.commands.setContent(initialContent);
+
+					onLoaded?.();
+					editor.view.focus();
+				}
 			},
 			onDestroy() {
 				editorStore.set(null);

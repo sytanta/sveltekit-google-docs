@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 
-import { TEMPLATES, type DocumentType } from '$lib/data/templates';
+import { DOCUMENT_TYPES, TEMPLATES } from '$lib/data/templates';
 import convexHttpClient from '$lib/utils/convex/backend';
 import clerkBackendClient from '$lib/utils/clerk/backend';
 import colorByUserName from '$lib/utils/nameToColor';
@@ -11,8 +11,9 @@ export const load: PageServerLoad = async ({ depends, request, url, params }) =>
 	depends('document-details');
 
 	if (params.id === 'new') {
-		let documentType = (url.searchParams.get('type') || 'blank') as DocumentType[number];
-		if (!(documentType in DocumentType)) documentType = 'blank';
+		let documentType = url.searchParams.get('type') || 'blank';
+		if (!DOCUMENT_TYPES.includes(documentType as (typeof DOCUMENT_TYPES)[number]))
+			documentType = 'blank';
 
 		const initialContent = TEMPLATES.find(({ id }) => id === documentType)?.initialContent;
 

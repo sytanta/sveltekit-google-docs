@@ -1,4 +1,4 @@
-export type DocumentType = [
+export const DOCUMENT_TYPES = [
 	'blank',
 	'software-proposal',
 	'project-proposal',
@@ -6,10 +6,10 @@ export type DocumentType = [
 	'resume',
 	'cover-letter',
 	'letter'
-];
+] as const;
 
 export const TEMPLATES: {
-	id: DocumentType[number];
+	id: (typeof DOCUMENT_TYPES)[number];
 	label: string;
 	imageUrl: string;
 	initialContent: string;

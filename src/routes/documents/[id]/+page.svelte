@@ -7,7 +7,7 @@
 
 	const { data } = $props();
 
-	let editorLoaded = $state(true);
+	let editorLoading = $state(true);
 </script>
 
 <svelte:head>
@@ -25,7 +25,7 @@
 		<NavBar
 			id={data.document._id}
 			title={data.document?.title}
-			setEditorLoadingStatus={(status) => (editorLoaded = status)}
+			setEditorLoadingStatus={(status) => (editorLoading = status)}
 		/>
 		<Toolbar />
 	</div>
@@ -33,10 +33,10 @@
 		<Editor
 			initialContent={data.document.initial_content}
 			users={data.users}
-			onLoaded={() => (editorLoaded = false)}
+			onLoaded={() => (editorLoading = false)}
 		/>
 
-		{#if editorLoaded}
+		{#if editorLoading}
 			<div
 				class="absolute top-0 left-0 z-5 flex min-h-screen w-full flex-col items-center justify-center gap-2 bg-white/70"
 			>
