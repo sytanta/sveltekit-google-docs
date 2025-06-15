@@ -23,6 +23,7 @@
 	import { toast } from 'svelte-sonner';
 
 	import { goto, invalidate } from '$app/navigation';
+	import { page } from '$app/state';
 	import { clerkClientStore } from '$lib/stores/clerk.svelte';
 	import editorStore from '$lib/stores/editor.svelte';
 	import {
@@ -111,23 +112,32 @@
 		creatingNewDoccument = true;
 		setEditorLoadingStatus?.(true);
 
-		convexClient
-			.mutation(api.documents.create, {
-				title: 'Untitled document',
-				initial_content: '',
-				user_external_id: clerkClient?.user?.id!,
-				organization_external_id: clerkClient?.organization?.id
-			})
-			.catch(() => toast.error('Failed to create a new document'))
-			.then(async (id) => {
-				await goto(`/documents/${id}`)
-					.then(() => invalidate('document-detail'))
-					.then(() => toast.success('New document created'));
-			})
-			.finally(() => {
-				creatingNewDoccument = false;
-				setEditorLoadingStatus?.(false);
-			});
+		if (clerkClient?.user) {
+			convexClient
+				.mutation(api.documents.create, {
+					title: 'Untitled document',
+					initial_content: '',
+					user_external_id: clerkClient?.user?.id!,
+					organization_external_id: clerkClient?.organization?.id
+				})
+				.catch(() => toast.error('Failed to create a new document'))
+				.then(async (id) => {
+					await goto(`/documents/${id}`)
+						.then(() => invalidate('document-detail'))
+						.then(() => toast.success('New document created'));
+				})
+				.finally(() => {
+					creatingNewDoccument = false;
+					setEditorLoadingStatus?.(false);
+				});
+		} else {
+			goto(`/documents/new?type=${page.url.searchParams.get('type') || 'blank'}`)
+				.then(() => invalidate('document-details'))
+				.then(() => {
+					creatingNewDoccument = false;
+					setEditorLoadingStatus?.(false);
+				});
+		}
 	};
 </script>
 
