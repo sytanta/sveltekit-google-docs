@@ -24,10 +24,10 @@ export const setUser = (
 	usersContext[user.id] = 1;
 
 	// Create a new record in "users" table
-	createUser(user, convexClient);
+	createConvexUser(user, convexClient);
 };
 
-const createUser = (user: Clerk['user'], convexClient: ConvexClient) => {
+const createConvexUser = (user: Clerk['user'], convexClient: ConvexClient) => {
 	if (!user) return;
 
 	const {

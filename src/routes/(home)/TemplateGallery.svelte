@@ -34,14 +34,46 @@
 		if (!clerkClient?.isSignedIn)
 			return goto(`/documents/new?type=${documentType}`).finally(() => (isCreating = false));
 
+		const {
+			id,
+			fullName,
+			primaryEmailAddress,
+			imageUrl,
+			username,
+			firstName,
+			lastName,
+			primaryPhoneNumber,
+			hasVerifiedEmailAddress,
+			hasVerifiedPhoneNumber,
+			updatedAt
+		} = clerkClient.user!;
+
+		// Make sure a user is created before his document
 		convexClient
-			.mutation(api.documents.create, {
-				title: title,
-				user_external_id: clerkClient?.user?.id!,
-				organization_external_id: clerkClient?.organization?.id,
-				initial_content: initialContent
+			.mutation(api.users.create, {
+				external_id: id,
+				aud: 'convex',
+				name: fullName ?? '',
+				email: String(primaryEmailAddress ?? ''),
+				picture: imageUrl,
+				nickname: username ?? '',
+				given_name: firstName ?? '',
+				updated_at: updatedAt?.getTime() ?? new Date().getTime(),
+				family_name: lastName ?? '',
+				phone_number: String(primaryPhoneNumber ?? ''),
+				email_verified: hasVerifiedEmailAddress,
+				phone_number_verified: hasVerifiedPhoneNumber
 			})
-			.then((id) => goto(`/documents/${id}`).finally(() => (isCreating = false)));
+			.then(() =>
+				convexClient
+					.mutation(api.documents.create, {
+						title,
+						user_external_id: clerkClient?.user!.id,
+						organization_external_id: clerkClient?.organization?.id,
+						initial_content: initialContent
+					})
+					.then((id) => goto(`/documents/${id}`).finally(() => (isCreating = false)))
+			);
 	};
 </script>
 

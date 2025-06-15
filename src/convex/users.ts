@@ -23,7 +23,7 @@ export const create = mutation({
 			.query('users')
 			.withIndex('by_external_id', (q) => q.eq('external_id', args.external_id))
 			.unique();
-		if (existingUser) return;
+		if (existingUser) return existingUser._id;
 
 		return await ctx.db.insert('users', args);
 	}
