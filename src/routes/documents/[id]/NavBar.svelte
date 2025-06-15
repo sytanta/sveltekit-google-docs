@@ -133,7 +133,9 @@
 
 <nav class="flex items-center justify-between">
 	<div class="flex items-center gap-2">
-		<a href="/"><img src="/logo.svg" alt="Logo" width="36px" height="36px" /></a>
+		<a href="/" class="focus:outline-none"
+			><img src="/logo.svg" alt="Logo" width="36px" height="36px" /></a
+		>
 		<div class="flex flex-col">
 			<DocumentInput {id} title={docTitle} onRename={(newTitle) => (docTitle = newTitle)} />
 
