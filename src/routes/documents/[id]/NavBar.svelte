@@ -201,32 +201,34 @@
 							</MenubarItem>
 							<MenubarSeparator></MenubarSeparator>
 
-							<RenameDocumentDialog
-								documentId={id as Id<'documents'>}
-								currentTitle={docTitle}
-								onRename={(newTitle) => {
-									docTitle = newTitle;
-								}}
-							>
-								<MenubarItem onSelect={(event) => event.preventDefault()}>
-									<FilePenIcon class="size-4" />
-									Rename
-								</MenubarItem>
-							</RenameDocumentDialog>
+							{#if clerkClient?.user}
+								<RenameDocumentDialog
+									documentId={id as Id<'documents'>}
+									currentTitle={docTitle}
+									onRename={(newTitle) => {
+										docTitle = newTitle;
+									}}
+								>
+									<MenubarItem onSelect={(event) => event.preventDefault()}>
+										<FilePenIcon class="size-4" />
+										Rename
+									</MenubarItem>
+								</RenameDocumentDialog>
 
-							<RemoveDocumentDialog
-								documentId={id as Id<'documents'>}
-								onDelete={async () => {
-									await invalidate('home');
-									return goto('/');
-								}}
-							>
-								<MenubarItem onSelect={(event) => event.preventDefault()}>
-									<TrashIcon class="size-4" />
-									Remove
-								</MenubarItem>
-							</RemoveDocumentDialog>
-							<MenubarSeparator></MenubarSeparator>
+								<RemoveDocumentDialog
+									documentId={id as Id<'documents'>}
+									onDelete={async () => {
+										await invalidate('home');
+										return goto('/');
+									}}
+								>
+									<MenubarItem onSelect={(event) => event.preventDefault()}>
+										<TrashIcon class="size-4" />
+										Remove
+									</MenubarItem>
+								</RemoveDocumentDialog>
+								<MenubarSeparator></MenubarSeparator>
+							{/if}
 
 							<MenubarItem onSelect={() => window.print()}>
 								<PrinterIcon class="size-4" />
