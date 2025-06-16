@@ -13,7 +13,7 @@
 			selection?: { from: number; to: number },
 			threadId?: string
 		) => void;
-		onReplyToComment: (commentId: string, content: string, threadId?: string) => void;
+		onReplyToComment: (commentId: string, content: string, threadId: string) => void;
 		visible: boolean;
 		selection?: { from: number; to: number };
 	}
@@ -106,7 +106,7 @@
 
 	function handleReply(commentId: string) {
 		if (replyText.trim()) {
-			onReplyToComment(commentId, replyText.trim(), threadId);
+			onReplyToComment(commentId, replyText.trim(), threadId!);
 			replyText = '';
 			showReplyForm = null;
 		}

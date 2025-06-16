@@ -7,8 +7,8 @@
 	import StarterKit from '@tiptap/starter-kit';
 	import Collaboration from '@tiptap/extension-collaboration';
 	import CollaborationCursor from '@tiptap/extension-collaboration-cursor';
-	import type { SuggestionProps } from '@tiptap/suggestion';
-	import Mention from '@tiptap/extension-mention';
+	import type { SuggestionKeyDownProps, SuggestionProps } from '@tiptap/suggestion';
+	import Mention, { type MentionNodeAttrs } from '@tiptap/extension-mention';
 	import FontFamily from '@tiptap/extension-font-family';
 	import TextStyle from '@tiptap/extension-text-style';
 	import Heading from '@tiptap/extension-heading';
@@ -87,7 +87,7 @@
 			}),
 			Link.configure({ openOnClick: false, autolink: true, defaultProtocol: 'https' }),
 			Image,
-			ImageResize,
+			ImageResize, // this extension triggers "Duplicate extension names found: ['image', 'heading']. This can lead to issues." warning, ignore
 			TaskList,
 			TaskItem.configure({ nested: true }),
 			Table,
@@ -124,7 +124,10 @@
 					return res.json();
 				},
 				resolveUsers(args) {
-					return args.userIds.map((id) => usersMap.get(id) || users[id]);
+					return args.userIds.map((id) => {
+						const user = usersMap.get(id) || users[id];
+						return { id: user.id, info: { name: user.name, avatar: user.avatar } };
+					});
 				},
 				resolveMentionSuggestions({ text }) {
 					let filteredUsers = usersList;
@@ -332,16 +335,16 @@
 		let popup: ReturnType<typeof tippy>;
 
 		return {
-			onStart: async (props: SuggestionProps<any, any>) => {
+			onStart: async (props: SuggestionProps<any, MentionNodeAttrs>) => {
 				mentionedUsers = searchUsers(props.query);
 				mentionEditorCommand = getOnMentionHandler(props.command);
 
-				if (!props.clientRect) return;
+				if (!props.clientRect) return false;
 
 				await tick();
 
 				popup = tippy('body', {
-					getReferenceClientRect: props.clientRect!,
+					getReferenceClientRect: props.clientRect as () => DOMRect,
 					appendTo: () => document.body,
 					content: document.getElementById('mention-list') as Element,
 					allowHTML: true,
@@ -351,6 +354,8 @@
 					placement: 'bottom-start',
 					onHidden: () => (mentionedUsers = [])
 				});
+
+				return true;
 			},
 
 			onUpdate(props: SuggestionProps<any, any>) {
@@ -360,11 +365,11 @@
 				if (!props.clientRect) return;
 
 				popup[0].setProps({
-					getReferenceClientRect: props.clientRect!
+					getReferenceClientRect: props.clientRect as () => DOMRect
 				});
 			},
 
-			onKeyDown(props: SuggestionProps) {
+			onKeyDown(props: SuggestionKeyDownProps) {
 				if (props.event?.key === 'Escape') {
 					popup[0].hide();
 					return true;
@@ -387,7 +392,7 @@
 		editor?.commands.addComment(content, selection, threadId);
 	}
 
-	function handleReplyToComment(commentId: string, content: string, threadId?: string) {
+	function handleReplyToComment(commentId: string, content: string, threadId: string) {
 		editor?.commands.replyToComment(commentId, content, threadId);
 	}
 
