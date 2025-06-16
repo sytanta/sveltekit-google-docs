@@ -10,6 +10,7 @@
 	import { clerkClientStore } from '$lib/stores/clerk.svelte';
 	import editorStore from '$lib/stores/editor.svelte';
 	import { newDebounceFunc } from '$lib/utils/debounce';
+	import { cn } from '$lib/utils';
 	import { api } from '../../../convex/_generated/api';
 	import type { Id } from '../../../convex/_generated/dataModel';
 
@@ -123,9 +124,11 @@
 		</form>
 	{:else}
 		<span
-			onclick={() => (isEditing = true)}
+			onclick={() => {
+				if (clerkClient?.user) isEditing = true;
+			}}
 			role="presentation"
-			class="cursor-pointer truncate px-1.5 text-lg">{title}</span
+			class={cn('truncate px-1.5 text-lg', clerkClient?.user ? 'cursor-pointer' : '')}>{title}</span
 		>
 	{/if}
 
