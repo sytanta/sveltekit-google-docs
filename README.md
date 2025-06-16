@@ -115,10 +115,11 @@ npm run preview
 2. **Create Document**: Start a new document from templates or blank
 3. **Rich Text Editing**: Use the TipTap editor with comprehensive formatting tools
 4. **Real-time Collaboration**: Invite collaborators to edit documents simultaneously
-5. **Comments & Mentions**: Add comments and mention team members
-6. **Organization Management**: Create organization and invite team members
-7. **Export Documents**: Export your work in multiple formats (PDF, HTML, TXT, JSON)
-8. **Document search**
+5. **Real-time Push Notification**: Inform collaborators when a new comment is added or a user is mentioned
+6. **Comments & Mentions**: Add comments and mention team members
+7. **Organization Management**: Create organization and invite team members
+8. **Export Documents**: Export your work in multiple formats (PDF, HTML, TXT, JSON)
+9. **Document search**
 
 ## 📄 License
 
