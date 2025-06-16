@@ -28,8 +28,9 @@ export const CommentsExtension = Extension.create<CommentsOptions>({
 
 	addOptions() {
 		return {
-			yDoc: null as Y.Doc | null,
-			yProvider: null as LiveblocksYjsProvider | null,
+			yDoc: null as unknown as Y.Doc,
+			yProvider: null as unknown as LiveblocksYjsProvider,
+			roomId: '',
 			userId: '',
 			userName: '',
 			onShowFloatingMenu: () => {}
@@ -37,13 +38,7 @@ export const CommentsExtension = Extension.create<CommentsOptions>({
 	},
 
 	addExtensions() {
-		return [
-			CommentMark.configure({
-				onCommentClick: (threadId: string) => {
-					this.showCommentsForThreadId(threadId);
-				}
-			})
-		];
+		return [CommentMark];
 	},
 
 	addStorage() {
@@ -76,30 +71,6 @@ export const CommentsExtension = Extension.create<CommentsOptions>({
 
 		threadsArr.observe(syncThreads);
 		syncThreads();
-
-		// // Define sync function that has access to the extension context
-		// const syncComments = () => {
-		// 	const yComments = this.options.yDoc?.getMap('comments');
-		// 	if (!yComments) return;
-
-		// 	this.storage.comments.clear();
-		// 	yComments.forEach((comment, commentId) => {
-		// 		this.storage.comments.set(commentId, comment as Comment);
-		// 	});
-
-		// 	// Update editor view to reflect comment changes
-		// 	this.editor.view.dispatch(this.editor.view.state.tr.setMeta('comments', { sync: true }));
-		// };
-
-		// // Listen for comment changes
-		// const yComments = this.options.yDoc.getMap('comments');
-		// yComments.observe(syncComments);
-
-		// // Initial sync
-		// this.options.yProvider.on('sync', syncComments);
-
-		// // Store the sync function for potential cleanup
-		// this.storage.syncComments = syncComments;
 	},
 
 	addProseMirrorPlugins() {
@@ -136,7 +107,7 @@ export const CommentsExtension = Extension.create<CommentsOptions>({
 						const threadId = target.getAttribute('data-thread-id');
 
 						if (threadId) {
-							editor.commands.showFloatingMenu(null, threadId);
+							editor.commands.showFloatingMenu(undefined, threadId);
 							return true;
 						}
 
@@ -216,9 +187,9 @@ export const CommentsExtension = Extension.create<CommentsOptions>({
 
 					// Add to Yjs document
 					const threadsMap = this.options.yDoc.getMap('commentThreads');
-					const currentThreadId = threadId || this.editor.commands.generateThreadId();
+					const currentThreadId = threadId || generateThreadId();
 
-					const commentId = this.editor.commands.generateCommentId();
+					const commentId = generateCommentId();
 					const comment: Comment = {
 						id: commentId,
 						threadId: currentThreadId,
@@ -293,7 +264,7 @@ export const CommentsExtension = Extension.create<CommentsOptions>({
 					if (existingCommentIndex < 0) return false;
 
 					const reply: Comment = {
-						id: this.editor.commands.generateCommentId(),
+						id: generateCommentId(),
 						threadId,
 						userId: this.options.userId,
 						userName: this.options.userName,
@@ -358,6 +329,8 @@ export const CommentsExtension = Extension.create<CommentsOptions>({
 						},
 						extension.options.onNotification
 					);
+
+					return true;
 				},
 
 			deleteThread:
@@ -380,11 +353,11 @@ export const CommentsExtension = Extension.create<CommentsOptions>({
 					});
 
 					if (tr.docChanged) dispatch?.(tr);
+					return true;
 				},
 
 			showFloatingMenu:
-				(selection?: { from: number; to: number }, existingThreadId?: string) =>
-				({ editor }) => {
+				(selection?: { from: number; to: number }, existingThreadId?: string) => () => {
 					if (existingThreadId) extension.storage.currentThreadId = existingThreadId;
 					const comments = extension.storage.threads.get(existingThreadId)?.comments || [];
 
@@ -398,28 +371,22 @@ export const CommentsExtension = Extension.create<CommentsOptions>({
 					return true;
 				},
 
-			hideFloatingMenu:
-				() =>
-				({ editor }) => {
-					this.options.onShowFloatingMenu?.({
-						visible: false,
-						comments: []
-					});
+			hideFloatingMenu: () => () => {
+				this.options.onShowFloatingMenu?.({
+					visible: false,
+					comments: []
+				});
 
-					return true;
-				},
-
-			generateThreadId:
-				() =>
-				({ editor }) => {
-					return `thread_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-				},
-
-			generateCommentId:
-				() =>
-				({ editor }) => {
-					return `comment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-				}
+				return true;
+			}
 		};
 	}
 });
+
+function generateThreadId() {
+	return `thread_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+}
+
+function generateCommentId() {
+	return `comment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+}

@@ -1,8 +1,8 @@
-import { Mark, markInputRule, markPasteRule, mergeAttributes } from '@tiptap/core';
+import { Mark, mergeAttributes } from '@tiptap/core';
 
 export interface CommentOptions {
 	HTMLAttributes: Record<string, any>;
-	onCommentClick?: (commentId: string) => void;
+	onCommentClick?: (threadId: string) => void;
 }
 
 declare module '@tiptap/core' {
@@ -11,6 +11,20 @@ declare module '@tiptap/core' {
 			setCommentMark: (threadId: string) => ReturnType;
 			toggleCommentMark: (threadId: string) => ReturnType;
 			unsetCommentMark: () => ReturnType;
+
+			addComment: (
+				content: string,
+				selection?: { from: number; to: number },
+				threadId?: string
+			) => ReturnType;
+			replyToComment: (commentId: string, content: string, threadId: string) => ReturnType;
+			resolveThread: (threadId: string) => ReturnType;
+			deleteThread: (threadId: string) => ReturnType;
+			showFloatingMenu: (
+				selection?: { from: number; to: number },
+				existingThreadId?: string
+			) => ReturnType;
+			hideFloatingMenu: () => ReturnType;
 		};
 	}
 }
@@ -31,9 +45,7 @@ export const CommentMark = Mark.create<CommentOptions>({
 				default: null,
 				parseHTML: (element) => element.getAttribute('data-thread-id'),
 				renderHTML: (attributes) => {
-					if (!attributes.threadId) {
-						return {};
-					}
+					if (!attributes.threadId) return {};
 					return {
 						'data-thread-id': attributes.threadId
 					};
