@@ -170,7 +170,12 @@ export const CommentsExtension = Extension.create<CommentsOptions>({
 					};
 
 					const handleKeyUp = (event: KeyboardEvent) => {
-						// Only handle selection changes via keyboard (arrow keys, etc.)
+						if (event.key === 'Escape') {
+							editor.commands.hideFloatingMenu();
+							return;
+						}
+
+						// Handle selection changes via keyboard (arrow keys, etc.)
 						if (
 							['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)
 						) {
