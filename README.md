@@ -1,38 +1,146 @@
-# sv
+# Collaborative Document Editor - SvelteKit Edition
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A modern Google Docs clone with collaborative document editor built with SvelteKit (Svelte 5), featuring real-time collaboration, rich text editing, and comprehensive document management capabilities.
 
-## Creating a project
+## 📋 Project Overview
 
-If you're seeing this, you've probably already done this step. Congrats!
+This project is a SvelteKit (Svelte 5) remake of the original collaborative document editor from [this YouTube tutorial](https://www.youtube.com/watch?v=gq2bbDmSokU). While maintaining all the core functionalities of the original project, this version leverages SvelteKit with TypeScript.
+
+### ✨ Key Features
+
+- 📝 **Rich Text Editor**: Powered by TipTap with comprehensive formatting tools
+- 🤝 **Real-time Collaboration & Database**: Live collaborative editing with Liveblocks
+- 💭 **Comments and Mentions**: Interactive commenting system with user mentions
+- 🔔 **Notifications System**: Real-time notifications
+- 📑 **Document Templates**: Pre-built templates for quick document creation
+- ↩️ **Undo/Redo History**: Full editing history with undo/redo capabilities
+- 📊 **Table Support**: Table editing and formatting
+- 🖼️ **Image Uploads**: Seamless image integration in documents
+- 📏 **Margin Controls**: Customizable document margins
+- ⬇️ **Export Options**: Export documents as PDF, HTML, TXT, or JSON
+- 🏢 **Organization Workspaces**
+- ✉️ **Organization Invites**: Invite team members to join organizations
+- 🔒 **Authentication**: Secure authentication powered by Clerk
+- 📱 **Responsive Design**: Optimized for all device sizes
+- 🎯 **Cursor Tracking**: Real-time cursor tracking for collaborators
+- 🎨 **Text Formatting Tools**: Comprehensive text styling options
+- 📝 **Lists and Checklists**: Support for 2 list types and interactive checklists
+- 🔗 **Link Embedding**
+
+## 🛠️ Tech Stack
+
+- **Frontend Framework**: SvelteKit (Svelte 5) with TypeScript
+- **Styling**: Tailwind CSS + Shadcn-Svelte UI Components
+- **Database & Backend**: Convex (real-time database)
+- **Real-time Collaboration**: Liveblocks
+- **Rich Text Editor**: TipTap Editor
+- **Authentication**: Clerk
+- **Deployment**: Vercel
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+Make sure you have the following installed on your system:
+
+- Node.js (v18 or higher)
+- npm or yarn package manager
+- Git
+
+### Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/sytanta/sveltekit-google-docs.git
+   cd youtube-sveltekit-clone
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Environment Setup**
+
+   Create a `.env.local` file in the root directory and add your environment variables:
+
+   ```bash
+   # Clerk Authentication
+   PUBLIC_CLERK_PUBLISHABLE_KEY="your_clerk_publishable_key"
+   CLERK_SECRET_KEY="your_clerk_secret_key"
+
+   # Liveblocks (Real-time Collaboration)
+   LIVEBLOCKS_SECRET_KEY="your_liveblocks_secret_key"
+   ```
+
+4. **Convex Setup**
+
+   Initialize and deploy your Convex backend:
+
+   ```bash
+   npx convex dev
+   ```
+
+5. **Run the development server**
+
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+6. **Open your browser**
+
+   Navigate to `http://localhost:5173` to see the application running.
+
+### Build for Production
 
 ```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
+# Build the application
 npm run build
+
+# Preview the production build
+npm run preview
 ```
 
-You can preview the production build with `npm run preview`.
+## 🎯 Usage
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+### Basic Usage
+
+1. **Authentication**: Sign up or log in using Clerk authentication
+2. **Create Document**: Start a new document from templates or blank
+3. **Rich Text Editing**: Use the TipTap editor with comprehensive formatting tools
+4. **Real-time Collaboration**: Invite collaborators to edit documents simultaneously
+5. **Comments & Mentions**: Add comments and mention team members
+6. **Organization Management**: Create organization and invite team members
+7. **Export Documents**: Export your work in multiple formats (PDF, HTML, TXT, JSON)
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Original project inspiration from [YouTube Tutorial](https://www.youtube.com/watch?v=gq2bbDmSokU)
+- SvelteKit for the amazing framework
+- Convex for the real-time database and backend infrastructure
+- Liveblocks for real-time collaboration capabilities
+- TipTap for the excellent rich text editor
+- Clerk for seamless authentication
+- Shadcn-Svelte for beautiful UI components
+- The open-source community for various libraries and tools used in this project
+- README content originally generated by [claude.ai](https://claude.ai)
+
+## 📞 Contact
+
+Ta Sy Tan - sytanta@yahoo.com
+
+Project Link: [https://github.com/sytanta/sveltekit-google-docs.git](https://github.com/sytanta/sveltekit-google-docs.git)
+
+---
+
+⭐ Don't forget to give the project a star if you found it helpful!
