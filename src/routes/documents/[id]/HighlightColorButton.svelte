@@ -41,7 +41,7 @@
 			currentTarget: EventTarget & HTMLButtonElement;
 		}
 	) => {
-		const { color } = e.target?.dataset;
+		const { color } = e.currentTarget.dataset;
 		if (color) editor?.chain().focus().setHighlight({ color }).run();
 	};
 </script>

@@ -44,7 +44,7 @@
 				type="url"
 				value={href}
 				placeholder="https://example.com"
-				onchange={(e) => (href = e.target?.value || '')}
+				onchange={(e) => (href = e.currentTarget.value || '')}
 			/>
 			<Button type="button" onclick={() => applyLink()} class="cursor-pointer">Apply</Button>
 		</form>

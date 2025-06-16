@@ -167,30 +167,6 @@ export const CommentsExtension = Extension.create<CommentsOptions>({
 								editor.commands.showFloatingMenu({ from, to }, overlappingThread?.id);
 							}
 						}
-
-						// // Check if selection changed
-						// if (!selection.eq(prevSelection)) {
-						// 	if (selection.empty) {
-						// 		editor.commands.hideFloatingMenu();
-						// 	} else {
-						// 		const { from, to } = selection;
-						// 		const selectedText = view.state.doc.textBetween(from, to);
-
-						// 		if (selectedText.trim()) {
-						// 			// Check for overlapping threads
-						// 			const overlappingThread = Array.from(
-						// 				(extension.storage.threads as Map<string, CommentThread>).values()
-						// 			).find(
-						// 				(thread) =>
-						// 					(from >= thread.from && from <= thread.to) ||
-						// 					(to >= thread.from && to <= thread.to) ||
-						// 					(from <= thread.from && to >= thread.to)
-						// 			);
-
-						// 			editor.commands.showFloatingMenu({ from, to }, overlappingThread);
-						// 		}
-						// 	}
-						// }
 					};
 
 					const handleKeyUp = (event: KeyboardEvent) => {

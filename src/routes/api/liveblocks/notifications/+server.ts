@@ -67,9 +67,6 @@ export const POST: RequestHandler = async ({ request }) => {
 			timestamp
 		}
 	}));
-	console.log('aaaaaaaaaaaaaaaaa', notifications);
-
-	await lbBackendClient.deleteAllInboxNotifications({ userId: receivers[0].id! });
 
 	// Send notifications using Liveblocks
 	await Promise.all(

@@ -373,7 +373,6 @@
 	left: 0;
 }
 .collaboration-cursor__label {
-	/* background-color: #ff6b6b; */
 	position: absolute;
 	width: max-content;
 	bottom: 16px;

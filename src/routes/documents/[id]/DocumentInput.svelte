@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { untrack } from 'svelte';
+	import { onDestroy, untrack } from 'svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { useConvexClient } from 'convex-svelte';
 	import type { Status } from '@liveblocks/client';
@@ -45,6 +45,10 @@
 	});
 
 	const convexClient = useConvexClient();
+
+	onDestroy(() => {
+		unsubscribeStatusChange?.();
+	});
 
 	const onVisible = (e: HTMLInputElement) => {
 		e.focus();
