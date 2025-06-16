@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { useConvexClient } from 'convex-svelte';
+	import { toast } from 'svelte-sonner';
 	import { LoaderIcon } from '@lucide/svelte';
 
 	import { goto } from '$app/navigation';
@@ -64,16 +65,29 @@
 				email_verified: hasVerifiedEmailAddress,
 				phone_number_verified: hasVerifiedPhoneNumber
 			})
-			.then(() =>
-				convexClient
-					.mutation(api.documents.create, {
-						title,
-						user_external_id: clerkClient?.user!.id,
-						organization_external_id: clerkClient?.organization?.id,
-						initial_content: initialContent
-					})
-					.then((id) => goto(`/documents/${id}`).finally(() => (isCreating = false)))
-			);
+			.then(async () => {
+				// Create his related organization as well
+				if (clerkClient.organization) {
+					const { id, name, slug, imageUrl } = clerkClient.organization;
+					await convexClient.mutation(api.organizations.create, {
+						external_id: id,
+						name,
+						slug: slug ?? '',
+						image_url: imageUrl,
+						user_external_id: clerkClient.user!.id
+					});
+				}
+
+				return convexClient.mutation(api.documents.create, {
+					title,
+					user_external_id: clerkClient?.user!.id,
+					organization_external_id: clerkClient?.organization?.id,
+					initial_content: initialContent
+				});
+			})
+			.then((id) => goto(`/documents/${id}`))
+			.catch(() => toast.error('Error creating a new document'))
+			.finally(() => (isCreating = false));
 	};
 </script>
 
