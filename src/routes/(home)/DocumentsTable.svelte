@@ -110,7 +110,7 @@
 	{:else}
 		<p class="text-muted-foreground py-18 text-center">
 			Select any template to start creating a document.<br />
-			If you would like to save your documents as well as to collaborate with other users in realtime,
+			If you would like to save your documents as well as to collaborate with other users in real-time,
 			please sign up.
 		</p>
 	{/if}
