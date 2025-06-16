@@ -118,6 +118,7 @@ npm run preview
 5. **Comments & Mentions**: Add comments and mention team members
 6. **Organization Management**: Create organization and invite team members
 7. **Export Documents**: Export your work in multiple formats (PDF, HTML, TXT, JSON)
+8. **Document search**
 
 ## 📄 License
 
