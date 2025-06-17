@@ -44,7 +44,7 @@
 		{/if}
 	</TableCell>
 	<TableCell>
-		<p class="w-[45vw] truncate md:w-[40vw] lg:w-[50vw]">{document.title}</p>
+		<p class="w-[45vw] truncate md:w-[40vw]">{document.title}</p>
 	</TableCell>
 	<TableCell class="text-muted-foreground hidden items-center gap-2 md:flex">
 		{#if document.organization_id}
