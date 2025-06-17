@@ -20,7 +20,7 @@
 
 <div class="min-h-screen bg-[#fafbfd]">
 	<div
-		class="fixed top-0 right-0 left-0 z-10 flex flex-col gap-y-2 bg-[#fafbfd] px-4 pt-2 print:hidden"
+		class="fixed top-0 right-0 left-0 z-10 flex flex-col gap-y-2 bg-[#fafbfd] px-2 pt-2 md:px-4 print:hidden"
 	>
 		<NavBar
 			id={data.document._id}

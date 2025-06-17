@@ -109,8 +109,8 @@
 
 <div class="flex items-center gap-2">
 	{#if isEditing}
-		<form method="post" use:enhance={handleSubmit} class="relative w-fit max-w-[50ch]">
-			<span class="invisible px-1.5 text-lg whitespace-pre">
+		<form method="post" use:enhance={handleSubmit} class="relative max-w-full">
+			<span class="invisible truncate px-1.5 text-lg whitespace-pre">
 				{title || ' '}
 			</span>
 			<input
@@ -144,6 +144,7 @@
 			viewBox="0 0 16 16"
 			height="20px"
 			width="20px"
+			class="shrink-0"
 			xmlns="http://www.w3.org/2000/svg"
 			><path
 				fill-rule="evenodd"
@@ -153,7 +154,7 @@
 			></path></svg
 		>
 	{:else if clerkClient?.user && (connectionStatus === 'initial' || connectionStatus === 'connecting' || connectionStatus === 'reconnecting' || isProcessing || isSubmitting)}
-		<LoaderIcon class="text-muted-foreground size-4 animate-spin" />
+		<LoaderIcon class="text-muted-foreground size-4 shrink-0 animate-spin" />
 	{:else}
 		<svg
 			stroke="currentColor"
@@ -162,6 +163,7 @@
 			viewBox="0 0 16 16"
 			height="20px"
 			width="20px"
+			class="shrink-0"
 			xmlns="http://www.w3.org/2000/svg"
 			><path
 				fill-rule="evenodd"

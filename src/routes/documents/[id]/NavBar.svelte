@@ -38,7 +38,7 @@
 		MenubarSubTrigger,
 		MenubarTrigger
 	} from '$lib/components/ui/menubar';
-	import ClerkButtons from '$lib/components/ClerkButtons.svelte';
+	import NavButtons from '$lib/components/NavButtons.svelte';
 	import RemoveDocumentDialog from '$lib/components/RemoveDocumentDialog.svelte';
 	import RenameDocumentDialog from '$lib/components/RenameDocumentDialog.svelte';
 	import DocumentInput from './DocumentInput.svelte';
@@ -142,11 +142,11 @@
 </script>
 
 <nav class="flex items-center justify-between">
-	<div class="flex items-center gap-2">
-		<a href="/" class="focus:outline-none"
+	<div class="flex max-w-3/4 items-center gap-1 md:max-w-4/5 md:gap-2">
+		<a href="/" class="shrink-0 focus:outline-none"
 			><img src="/logo.svg" alt="Logo" width="36px" height="36px" /></a
 		>
-		<div class="flex flex-col">
+		<div class="overflow-hidden">
 			<DocumentInput {id} title={docTitle} onRename={(newTitle) => (docTitle = newTitle)} />
 
 			<div class="flex">
@@ -319,7 +319,7 @@
 		</div>
 	</div>
 
-	<ClerkButtons
+	<NavButtons
 		allowSwitchingOrganization={false}
 		showCollaborators={true}
 		showNotifications={true}

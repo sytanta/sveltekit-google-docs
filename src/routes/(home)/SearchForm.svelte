@@ -7,6 +7,8 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 
+	const { class: className = '' }: { class?: string } = $props();
+
 	const [searchparam, setSearchParam] = useURLSearchParam('search');
 	let searchTerm = $state(String(searchparam || ''));
 	let searching = $state(false);
@@ -26,7 +28,7 @@
 	};
 </script>
 
-<div class="flex flex-1 items-center justify-center">
+<div class={className}>
 	<form method="post" class="relative w-full max-w-[720px]" use:enhance={handleSubmit}>
 		<Input
 			bind:value={searchTerm}

@@ -36,7 +36,7 @@
 </script>
 
 {#if isLoaded && isSignedIn}
-	<div class="ml-2 flex items-center gap-3 md:ml-6">
+	<div class="flex items-center gap-2 md:ml-6 md:gap-3">
 		{#if showCollaborators}
 			<Avatars />
 		{/if}

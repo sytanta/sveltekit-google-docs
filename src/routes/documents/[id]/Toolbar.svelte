@@ -4,7 +4,7 @@
 		BoldIcon,
 		ItalicIcon,
 		ListTodoIcon,
-		MessageSquarePlusIcon,
+		// MessageSquarePlusIcon,
 		PrinterIcon,
 		Redo2Icon,
 		RemoveFormattingIcon,
@@ -120,12 +120,12 @@
 			}
 		],
 		[
-			{
-				label: 'Comment',
-				icon: MessageSquarePlusIcon,
-				isActive: { value: false },
-				onclick: () => {}
-			},
+			// {
+			// 	label: 'Comment',
+			// 	icon: MessageSquarePlusIcon,
+			// 	isActive: { value: false },
+			// 	onclick: () => {}
+			// },
 			{
 				label: 'List Todo',
 				icon: ListTodoIcon,

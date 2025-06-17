@@ -1,6 +1,6 @@
 <script lang="ts">
-	import SearchInput from './SearchInput.svelte';
-	import ClerkButtons from '$lib/components/ClerkButtons.svelte';
+	import NavButtons from '$lib/components/NavButtons.svelte';
+	import Search from './Search.svelte';
 </script>
 
 <nav class="flex size-full items-center justify-between">
@@ -10,6 +10,6 @@
 		>
 		<h3 class="text-xl">Docs</h3>
 	</div>
-	<SearchInput />
-	<ClerkButtons />
+	<Search />
+	<NavButtons />
 </nav>
