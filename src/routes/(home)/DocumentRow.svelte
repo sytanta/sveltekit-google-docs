@@ -24,7 +24,7 @@
 </script>
 
 <TableRow class="cursor-pointer" onclick={() => openDocument()}>
-	<TableCell class="w-[50px]">
+	<TableCell>
 		{#if loadingDoc}
 			<div class="flex size-6 items-center justify-center">
 				<LoaderIcon class="size-4 animate-spin text-blue-500" />
@@ -43,12 +43,14 @@
 			>
 		{/if}
 	</TableCell>
-	<TableCell class="font-medium md:w-[45%]">{document.title}</TableCell>
+	<TableCell>
+		<p class="w-[45vw] truncate md:w-[40vw] lg:w-[50vw]">{document.title}</p>
+	</TableCell>
 	<TableCell class="text-muted-foreground hidden items-center gap-2 md:flex">
 		{#if document.organization_id}
-			<Building2Icon class="size-4" />
+			<Building2Icon class="size-4 shrink-0" />
 		{:else}
-			<CircleUserIcon class="size-4" />
+			<CircleUserIcon class="size-4 shrink-0" />
 		{/if}
 		{document.organization_id ? 'Organization' : 'Personal'}
 	</TableCell>

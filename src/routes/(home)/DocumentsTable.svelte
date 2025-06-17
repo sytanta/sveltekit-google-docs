@@ -64,7 +64,7 @@
 		<Table>
 			<TableHeader>
 				<TableRow class="border-none hover:bg-transparent">
-					<TableHead>Name</TableHead>
+					<TableHead class="w-[60px]">Name</TableHead>
 					<TableHead>&nbsp;</TableHead>
 					<TableHead class="hidden md:table-cell">Shared</TableHead>
 					<TableHead class="hidden md:table-cell">Created at</TableHead>

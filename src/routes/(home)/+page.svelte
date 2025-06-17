@@ -16,7 +16,7 @@
 </svelte:head>
 
 <main class="flex min-h-screen flex-col">
-	<div class="fixed top-0 right-0 left-0 z-10 h-16 bg-white p-4"><NavBar /></div>
+	<div class="fixed top-0 right-0 left-0 z-10 h-16 bg-white px-2 py-4 md:px-4"><NavBar /></div>
 	<div class="mt-16">
 		<TemplateGallery />
 		<DocumentsTable
